@@ -2,7 +2,7 @@ This file contains light modifications of 3 Solidity Smart Contracts.
 
 1. Create [multisign-contract](https://github.com/gnosis/MultiSigWallet/blob/master/contracts/MultiSigWallet.sol) withdrawal upper-bound per one transaction that equals 66 ETH.
 
-```
+```solidity
     @@ -91,6 +91,11 @@ contract MultiSigWallet {
          _;
      }

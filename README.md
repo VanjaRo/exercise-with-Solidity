@@ -42,7 +42,7 @@ This file contains light modifications of 3 Solidity Smart Contracts.
 
      mapping(address => mapping(address => uint256)) private _allowances;
 
- @@ -41,6 +41,10 @@ contract ERC20 is Context, IERC20 {
+@@ -41,6 +41,10 @@ contract ERC20 is Context, IERC20 {
      string private _name;
      string private _symbol;
 

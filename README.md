@@ -9,7 +9,7 @@ This file contains light modifications of 3 Solidity Smart Contracts.
      uint256 public constant MAX_OWNER_COUNT = 50;
 +    uint256 public constant MAX_TRANSACTION_VALUE = 66 ether;
 
-    @@ -91,6 +91,11 @@ contract MultiSigWallet {
+@@ -91,6 +91,11 @@ contract MultiSigWallet {
          _;
      }
 
@@ -42,7 +42,7 @@ This file contains light modifications of 3 Solidity Smart Contracts.
 
      mapping(address => mapping(address => uint256)) private _allowances;
 
-     @@ -41,6 +41,10 @@ contract ERC20 is Context, IERC20 {
+ @@ -41,6 +41,10 @@ contract ERC20 is Context, IERC20 {
      string private _name;
      string private _symbol;
 

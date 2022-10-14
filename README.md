@@ -3,6 +3,12 @@ This file contains light modifications of 3 Solidity Smart Contracts.
 1. Create [multisign-contract](https://github.com/gnosis/MultiSigWallet/blob/master/contracts/MultiSigWallet.sol) withdrawal upper-bound per one transaction that equals 66 ETH.
 
 ```solidity
+@@ -20,6 +20,7 @@ contract MultiSigWallet {
+      *  Constants
+      */
+     uint256 public constant MAX_OWNER_COUNT = 50;
++    uint256 public constant MAX_TRANSACTION_VALUE = 66 ether;
+
     @@ -91,6 +91,11 @@ contract MultiSigWallet {
          _;
      }
@@ -20,7 +26,7 @@ This file contains light modifications of 3 Solidity Smart Contracts.
          uint256 value,
          bytes data
 -    ) public returns (uint256 transactionId) {
-+    ) public notBiggerThen(value, 66 ether) returns (uint256 transactionId) {
++    ) public notBiggerThen(value, MAX_TRANSACTION_VALUE) returns (uint256 transactionId) {
          transactionId = addTransaction(destination, value, data);
          confirmTransaction(transactionId);
      }
@@ -35,12 +41,20 @@ This file contains light modifications of 3 Solidity Smart Contracts.
      mapping(address => uint256) private _balances;
 
      mapping(address => mapping(address => uint256)) private _allowances;
+
+     @@ -41,6 +41,10 @@ contract ERC20 is Context, IERC20 {
+     string private _name;
+     string private _symbol;
+
++    function getWeekday(uint256 timestamp) public pure returns (uint8) {
++        return uint8((timestamp / DAY_IN_SECONDS + 4) % 7);
++    }
 @@ -264,6 +266,10 @@ contract ERC20 is Context, IERC20 {
      ) internal virtual {
          require(sender != address(0), "ERC20: transfer from the zero address");
          require(recipient != address(0), "ERC20: transfer to the zero address");
 +        require(
-+            uint8((block.timestamp / DAY_IN_SECONDS + 4) % 7) != 5,
++            getWeekday(block.timestamp) != 5,
 +            "ERC20: transfer not allowed on Saturday"
 +        );
 
